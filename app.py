@@ -60,7 +60,10 @@ def get_notion_client():
 def get_books():
     notion = get_notion_client()
     db_id = st.secrets["NOTION_DATABASE_ID"]
-    results = notion.databases.query(database_id=db_id)
+    results = notion.databases.query(
+        database_id=db_id,
+        filter={"property": "Status", "status": {"equals": "Sugerido"}},
+    )
     books = []
     for page in results["results"]:
         props = page["properties"]
